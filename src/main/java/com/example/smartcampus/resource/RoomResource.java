@@ -51,7 +51,7 @@ public class RoomResource {
     public Response deleteRoom(@PathParam("id") int id) {
         Room room = CampusStore.getRoomById(id);
         if (room == null) {
-            throw new LinkedResourceNotFoundException("Room with id " + id + " was not found.");
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
         if (!CampusStore.getSensorsByRoomId(id).isEmpty()) {
             throw new RoomNotEmptyException("Room " + id + " cannot be deleted because it has sensors.");
