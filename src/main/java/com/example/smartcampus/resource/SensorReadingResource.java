@@ -5,7 +5,6 @@ import com.example.smartcampus.exception.SensorUnavailableException;
 import com.example.smartcampus.model.Sensor;
 import com.example.smartcampus.model.SensorReading;
 import com.example.smartcampus.store.CampusStore;
-import java.time.Instant;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,9 +14,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class SensorReadingResource {
-    private final int sensorId;
+    private final String sensorId;
 
-    public SensorReadingResource(int sensorId) {
+    public SensorReadingResource(String sensorId) {
         this.sensorId = sensorId;
     }
 
@@ -39,11 +38,11 @@ public class SensorReadingResource {
         if (sensor == null) {
             throw new LinkedResourceNotFoundException("Sensor with id " + sensorId + " was not found.");
         }
-        if (!sensor.isAvailable()) {
+        if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus())) {
             throw new SensorUnavailableException("Sensor " + sensorId + " is currently unavailable.");
         }
-        if (reading.getTimestamp() == null || reading.getTimestamp().isEmpty()) {
-            reading.setTimestamp(Instant.now().toString());
+        if (reading.getTimestamp() == 0L) {
+            reading.setTimestamp(System.currentTimeMillis());
         }
         SensorReading created = CampusStore.addReading(sensorId, reading);
         sensor.setCurrentValue(created.getValue());

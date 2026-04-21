@@ -1,28 +1,28 @@
 package com.example.smartcampus.model;
 
 public class Sensor {
-    private int id;
+    private String id;
     private String type;
-    private int roomId;
+    private String status;
     private double currentValue;
-    private boolean available;
+    private String roomId;
 
     public Sensor() {
     }
 
-    public Sensor(int id, String type, int roomId, double currentValue, boolean available) {
+    public Sensor(String id, String type, String status, double currentValue, String roomId) {
         this.id = id;
         this.type = type;
-        this.roomId = roomId;
+        this.status = status;
         this.currentValue = currentValue;
-        this.available = available;
+        this.roomId = roomId;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -34,12 +34,12 @@ public class Sensor {
         this.type = type;
     }
 
-    public int getRoomId() {
-        return roomId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setRoomId(int roomId) {
-        this.roomId = roomId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public double getCurrentValue() {
@@ -50,11 +50,11 @@ public class Sensor {
         this.currentValue = currentValue;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public String getRoomId() {
+        return roomId;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setRoomId(String roomId) {
+        this.roomId = roomId;
     }
 }

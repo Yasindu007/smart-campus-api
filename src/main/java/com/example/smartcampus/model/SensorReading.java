@@ -1,35 +1,33 @@
 package com.example.smartcampus.model;
 
 public class SensorReading {
-    private int id;
-    private int sensorId;
+    private String id;
     private double value;
-    private String timestamp;
+    private long timestamp;
 
     public SensorReading() {
     }
 
-    public SensorReading(int id, int sensorId, double value, String timestamp) {
+    public SensorReading(String id, long timestamp, double value) {
         this.id = id;
-        this.sensorId = sensorId;
-        this.value = value;
         this.timestamp = timestamp;
+        this.value = value;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getSensorId() {
-        return sensorId;
+    public long getTimestamp() {
+        return timestamp;
     }
 
-    public void setSensorId(int sensorId) {
-        this.sensorId = sensorId;
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 
     public double getValue() {
@@ -40,11 +38,4 @@ public class SensorReading {
         this.value = value;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
 }

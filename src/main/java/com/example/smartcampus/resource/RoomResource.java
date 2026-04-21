@@ -2,7 +2,6 @@ package com.example.smartcampus.resource;
 
 import com.example.smartcampus.exception.LinkedResourceNotFoundException;
 import com.example.smartcampus.exception.RoomNotEmptyException;
-import com.example.smartcampus.model.ErrorResponse;
 import com.example.smartcampus.model.Room;
 import com.example.smartcampus.store.CampusStore;
 import java.util.List;
@@ -39,7 +38,7 @@ public class RoomResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Room getRoomById(@PathParam("id") int id) {
+    public Room getRoomById(@PathParam("id") String id) {
         Room room = CampusStore.getRoomById(id);
         if (room == null) {
             throw new LinkedResourceNotFoundException("Room with id " + id + " was not found.");
@@ -49,16 +48,12 @@ public class RoomResource {
 
     @DELETE
     @Path("/{id}")
-    public Response deleteRoom(@PathParam("id") int id) {
+    public Response deleteRoom(@PathParam("id") String id) {
         Room room = CampusStore.getRoomById(id);
         if (room == null) {
-            ErrorResponse body = new ErrorResponse(404, "Room " + id + " was not found.");
-            return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.APPLICATION_JSON)
-                    .entity(body)
-                    .build();
+            throw new LinkedResourceNotFoundException("Room with id " + id + " was not found.");
         }
-        if (!CampusStore.getSensorsByRoomId(id).isEmpty()) {
+        if (!room.getSensorIds().isEmpty()) {
             throw new RoomNotEmptyException("Room " + id + " cannot be deleted because it has sensors.");
         }
         CampusStore.deleteRoom(id);
