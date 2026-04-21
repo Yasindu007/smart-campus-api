@@ -2,6 +2,7 @@ package com.example.smartcampus.resource;
 
 import com.example.smartcampus.exception.LinkedResourceNotFoundException;
 import com.example.smartcampus.exception.RoomNotEmptyException;
+import com.example.smartcampus.model.ErrorResponse;
 import com.example.smartcampus.model.Room;
 import com.example.smartcampus.store.CampusStore;
 import java.util.List;
@@ -51,7 +52,11 @@ public class RoomResource {
     public Response deleteRoom(@PathParam("id") int id) {
         Room room = CampusStore.getRoomById(id);
         if (room == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            ErrorResponse body = new ErrorResponse(404, "Room " + id + " was not found.");
+            return Response.status(Response.Status.NOT_FOUND)
+                    .type(MediaType.APPLICATION_JSON)
+                    .entity(body)
+                    .build();
         }
         if (!CampusStore.getSensorsByRoomId(id).isEmpty()) {
             throw new RoomNotEmptyException("Room " + id + " cannot be deleted because it has sensors.");
