@@ -65,11 +65,11 @@ Query parameters are better for optional filtering and searching collections, su
 ### Part 4.1 - Benefit of the Sub-Resource Locator Pattern
 The sub-resource locator pattern separates nested endpoint logic into a dedicated class. In this project, sensor reading operations are handled by `SensorReadingResource` instead of putting every nested path inside `SensorResource`. This keeps each resource class focused, improves readability, and makes the API easier to maintain as nested routes grow.
 
-### Part 5.1 - Why 422 for Missing Linked Resource
+### Part 5.2 - Why 422 for Missing Linked Resource
 HTTP `422 Unprocessable Entity` is appropriate when the request URI is valid and the JSON syntax is acceptable, but the payload contains a semantically invalid reference. For example, creating a sensor with a `roomId` that does not exist is not the same as requesting a missing endpoint. The request target exists, but the submitted data cannot be processed because the linked room is missing.
 
-### Part 5.2 - Risk of Exposing Stack Traces
+### Part 5.4 - Risk of Exposing Stack Traces
 Exposing internal Java stack traces can reveal package names, class names, method names, file structure, framework versions, and implementation details. Attackers can use this information to identify weak points in the application and plan more targeted attacks. Returning generic JSON error responses is safer because it gives clients useful error information without exposing internal server details.
 
-### Part 5.3 - Why Use Filters for Logging
+### Part 5.5 - Why Use Filters for Logging
 JAX-RS filters are useful for cross-cutting concerns such as logging because they run automatically around requests and responses. This avoids repeating `Logger.info()` calls inside every resource method. It keeps resource classes focused on business logic and makes logging easier to update consistently across the whole API.

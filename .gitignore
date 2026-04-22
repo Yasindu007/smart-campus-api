@@ -26,3 +26,6 @@ replay_pid*
 docs
 lecsandtutorialnotes
 /target/
+
+# Local video files
+*.mp4
